@@ -70,83 +70,6 @@ function highlightSlots() {
   }
 }
   
-function fixHighlights() {
-  const searchValue = document
-    .getElementById("searchBox")
-    .value.toUpperCase()
-    .trim();
-  const slots = searchValue.split("+");
-  const highlightedCells = [];
-  const errorMessage = document.getElementById("slotErrorMessage");
-
-  // Clear previous error message
-  errorMessage.textContent = "";
-  errorMessage.style.display = "none";
-
-  const alreadySelectedSlots = [];
-  const notFoundSlots = [];
-
-  // Check all slots for errors first
-  slots.forEach((slot) => {
-    let slotFoundInTable = false;
-    const cells = document.querySelectorAll(".selectable");
-
-    cells.forEach((cell) => {
-      if (cell.textContent.trim().toUpperCase() === slot) {
-        slotFoundInTable = true;
-
-        if (cell.classList.contains("fixed")) {
-          alreadySelectedSlots.push(slot); // Add to already fixed slots
-        }
-      }
-    });
-
-    if (!slotFoundInTable) {
-      notFoundSlots.push(slot); // Add to not found slots
-    }
-  });
-
-  // If any errors are found, show the error message and exit without fixing or highlighting any slots
-  if (alreadySelectedSlots.length > 0 || notFoundSlots.length > 0) {
-    let errorMessages = [];
-
-    if (alreadySelectedSlots.length > 0) {
-      errorMessages.push(`Slot(s) ${alreadySelectedSlots.join(", ")} already fixed.`);
-    }
-    if (notFoundSlots.length > 0) {
-      errorMessages.push(`Slot(s) ${notFoundSlots.join(", ")} not found in the table.`);
-    }
-
-    // Show the appropriate error message
-    errorMessage.textContent = errorMessages.join(" ");
-    errorMessage.style.display = "block";
-    return; // Exit function to prevent highlighting or fixing any slots
-  }
-
-  // If no errors, highlight and fix the slots
-  slots.forEach((slot) => {
-    const cells = document.querySelectorAll(".selectable");
-
-    cells.forEach((cell) => {
-      if (cell.textContent.trim().toUpperCase() === slot) {
-        cell.classList.add("fixed");
-        cell.classList.remove("searched");
-        cell.classList.add("highlighted");
-        cell.style.backgroundColor = highlightColor; // Set yellow color for fixed cells
-        highlightedCells.push(cell);
-      }
-    });
-  });
-
-  // Open the modal to ask for the subject name only if there are no errors
-  if (highlightedCells.length > 0) {
-    openModal(highlightedCells, slots.join("+"));
-  }
-
-  // Clear the search box after fixing the highlights
-  document.getElementById("searchBox").value = "";
-}
-  
 
 function fixHighlights() {
   const searchValue = document
@@ -347,25 +270,9 @@ document.getElementById("closeModal").onclick = function () {
 };
 
 // Add functionality for Enter key to trigger search
-// Handle Enter key in the search box
-document.getElementById("searchBox").addEventListener("keydown", function (event) {
+document.getElementById("searchBox").onkeydown = function (event) {
   if (event.key === "Enter") {
     highlightSlots();
   }
-});
-
-// Hide the project animation after 2 seconds
-window.addEventListener("load", function () {
-  const projectAnimation = document.getElementById("projectAnimation");
-
-  // Ensure the projectAnimation element is present
-  if (projectAnimation) {
-    setTimeout(() => {
-      projectAnimation.classList.add('hidden');
-    }, 2000); // 2 seconds
-  }
-});
-
-
-
+};
 
