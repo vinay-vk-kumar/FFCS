@@ -276,3 +276,16 @@ document.getElementById("searchBox").onkeydown = function (event) {
   }
 };
 
+document.addEventListener("DOMContentLoaded", function() {
+  const popup = document.querySelector('.popup');
+  
+  // Set a timeout to remove the popup from the DOM after the animation
+  setTimeout(function() {
+      popup.remove(); // Remove the popup element from the DOM
+  }, 4000); // Duration should match the animation duration
+});
+
+
+
+
+
