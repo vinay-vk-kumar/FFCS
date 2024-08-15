@@ -36,16 +36,25 @@ body {
     0% {
         opacity: 1;
         transform: scale(1);
+        filter: blur(0);
     }
 
     50% {
         opacity: 1;
         transform: scale(1);
+        filter: blur(0);
+    }
+
+    80% {
+        opacity: 0.5;
+        transform: scale(0.95);
+        filter: blur(2px);
     }
 
     100% {
         opacity: 0;
         transform: scale(0.9);
+        filter: blur(10px);
     }
 }
 
@@ -62,18 +71,81 @@ body {
 
 @keyframes popupTextAnimation {
     0% {
-        opacity: 1;
-        transform: translateY(0);
+        transform: translateY(20px);
+        opacity: 0;
     }
 
     50% {
+        transform: translateY(0);
         opacity: 1;
-        transform: translateY(-10px);
+    }
+
+    80% {
+        transform: translateY(0);
+        opacity: 1;
     }
 
     100% {
+        transform: translateY(-20px);
         opacity: 0;
-        transform: translateY(20px);
+    }
+}
+
+/* Additional graphics and animations */
+.popup::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(farthest-corner at 50% 50%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+    animation: radialGradientAnimation 4s ease-out;
+    z-index: -1;
+}
+
+@keyframes radialGradientAnimation {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+.popup::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: pulseAnimation 4s ease-out infinite;
+    z-index: -1;
+}
+
+@keyframes pulseAnimation {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
 
