@@ -351,53 +351,26 @@ footer {
     transition: color 0.3s ease;
 }
 
-.help-icon:hover {
-    color: #3a4bd4;
-}
-
-/* Help Popup Styles */
-#helpModal {
-    position: absolute;
+.help-content {
     display: none;
-    z-index: 9998;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
-}
-
-#helpModal .modal-content {
-    position: relative;
-    background-color: #fff;
-    top: 20%;
-    left: 33.4%;
-    margin: 0;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 10px;
+    position: absolute;
+    top: 23%;
+    left: 34%;
+    background-color: white;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    border-radius: 20px;
+    z-index: 1000;
     text-align: left;
 }
 
-#closeHelpModal {
-    color: #000000;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+.help-icon:hover+.help-content,
+.help-icon.active+.help-content {
+    display: block;
 }
 
-#closeHelpModal:hover,
-#closeHelpModal:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
 
 /* Landscape mode for screens with width up to 1200px */
 @media screen and (min-width: 600px) and (max-width: 1200px) and (orientation: landscape) {
@@ -448,20 +421,12 @@ footer {
         margin-top: 10px;
     }
 
-    #helpModal {
-        margin: 0 auto;
-    }
-
-    #helpModal .modal-content {
-        width: 90%;
-        padding: 15px;
-        top: 7%;
-        left: 14.4%;
-        margin: 0;
-    }
-
-    #closeHelpModal {
-        font-size: 24px;
+    .help-content {
+        top: 21%;
+        left: 14%;
+        width: 70%;
+        font-size: 12px;
+        padding: 5px 7px;
     }
 }
 
@@ -514,30 +479,23 @@ footer {
         margin-top: 5px;
     }
 
-    #helpModal {
-        margin: 0 auto;
-    }
-
-    #helpModal .modal-content {
-        width: 90%;
-        padding: 15px;
-        top: 7%;
-        left: 14.4%;
-        margin: 0;
-    }
-
-    #closeHelpModal {
-        font-size: 24px;
+    .help-content {
+        top: 0;
+        left: 0;
+        width: 70%;
+        font-size: 12px;
+        padding: 5px 7px;
     }
 }
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
+}
 
-  .Btn {
+.Btn {
     width: 45px;
     height: 45px;
     display: flex;
@@ -550,9 +508,9 @@ footer {
     border-radius: 7px;
     cursor: pointer;
     transition: all .3s;
-  }
-  
-  .svgContainer {
+}
+
+.svgContainer {
     min-width: 100%;
     height: 100%;
     display: flex;
@@ -564,9 +522,9 @@ footer {
     border-radius: 10px;
     transition: all .3s;
     border: 1px solid rgba(156, 156, 156, 0.466);
-  }
-  
-  .BG {
+}
+
+.BG {
     position: absolute;
     content: "";
     width: 100%;
@@ -576,20 +534,20 @@ footer {
     border-radius: 10px;
     pointer-events: none;
     transition: all .3s;
-  }
-  
-  .Btn:hover .BG {
+}
+
+.Btn:hover .BG {
     transform: rotate(35deg);
     transform-origin: bottom;
-  }
-  
-  .Btn:hover .svgContainer {
+}
+
+.Btn:hover .svgContainer {
     background-color: rgba(156, 156, 156, 0.466);
     backdrop-filter: blur(4px);
     margin: 10px;
-  }
+}
 
-div#buttonDiv{
+div#buttonDiv {
     display: flex;
     align-items: center;
     justify-content: center;

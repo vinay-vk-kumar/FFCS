@@ -57,11 +57,11 @@ function highlightSlots() {
 }
 
 document.getElementById("searchBox").onkeydown = function (event) {
-    console.log(event.key)
-    if (event.key === "Enter") {
-      highlightSlots();
-    }
-  };
+  console.log(event.key)
+  if (event.key === "Enter") {
+    highlightSlots();
+  }
+};
 
 function fixHighlights() {
   const searchValue = document.getElementById("searchBox").value.toUpperCase().trim();
@@ -191,12 +191,6 @@ function openModal(cells, key) {
       errorMessage.textContent = "";
       errorMessage.style.display = "none";
     }
-
-    // Add check for help modal
-    const helpModal = document.getElementById("helpModal");
-    if (event.target === helpModal) {
-      helpModal.style.display = "none";
-    }
   };
 
   document.getElementById("closeModal").onclick = () => {
@@ -239,23 +233,9 @@ function resetTable() {
   document.getElementById("fixedHighlightsList").textContent = "";
 }
 
-function openHelpPopup() {
-  document.getElementById("helpModal").style.display = "block";
-}
-
-// Close help modal when clicking the "X" button or outside of the modal
-document.getElementById("closeHelpModal").onclick = () => {
-  document.getElementById("helpModal").style.display = "none";
-};
-
 // Ensure both modals close when clicking outside of them
 window.onclick = event => {
-  const helpModal = document.getElementById("helpModal");
   const subjectModal = document.getElementById("subjectModal");
-
-  if (event.target === helpModal) {
-    helpModal.style.display = "none";
-  }
 
   if (event.target === subjectModal) {
     subjectModal.style.display = "none";
@@ -265,6 +245,10 @@ window.onclick = event => {
   }
 };
 
-document.getElementById('redirectButton').addEventListener('click', function() {
-    window.open('https://github.com/vinay-vk-kumar/FFCS', '_blank');
-  });
+document.querySelector('.help-icon').addEventListener('click', function () {
+  this.classList.toggle('active');
+});
+
+document.getElementById('redirectButton').addEventListener('click', function () {
+  window.open('https://github.com/vinay-vk-kumar/FFCS', '_blank');
+});

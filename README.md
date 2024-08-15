@@ -34,7 +34,13 @@ This web application helps VIT students to easily create, manage, and visualize 
    - Click the **Reset** button to clear all fixed slots, highlights, and subject names.
 
 4. **Help:**
-   - Click on the **❓** icon to open the help popup for guidance on using the timetable
+   - Click on the **❓** icon to open the help popup for guidance on using the timetable.
+
+## Preview
+
+![Timetable Preview](https://vinay-vk-kumar.github.io/FFCS/)
+
+*Screenshot of the timetable interface, showing highlighted slots and fixed subjects.*
 
 ## Known Issues and Future Updates
 
@@ -43,7 +49,7 @@ This web application helps VIT students to easily create, manage, and visualize 
 
 ## Credits
 
-- **Developers:** Vinay Kumar (23BAI10125) And Piyush Upadhyay (23BAI1O1O3).
+- **Developers:** Vinay Kumar (23BAI10125) and Piyush Upadhyay (23BAI1O1O3).
 - **More Updates:** Ongoing updates will improve the application based on user feedback.
 
 ## Deployment Instructions
