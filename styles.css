@@ -33,9 +33,20 @@ body {
 }
 
 @keyframes popupAnimation {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.9); }
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
 }
 
 .popup-content {
@@ -50,9 +61,20 @@ body {
 }
 
 @keyframes popupTextAnimation {
-    0% { opacity: 1; transform: translateY(0); }
-    50% { opacity: 1; transform: translateY(-10px); }
-    100% { opacity: 0; transform: translateY(20px); }
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 }
 
 /* Table Styles */
@@ -72,7 +94,8 @@ table:hover {
     transform: scale(1.02);
 }
 
-th, td {
+th,
+td {
     border: 1px solid #e0e0e0;
     padding: 12px;
     text-align: center;
@@ -103,7 +126,7 @@ td:hover {
 
 /* Control container styles */
 .control-container {
-    margin: 20px;
+    margin: 10px;
     text-align: center;
 }
 
@@ -243,7 +266,7 @@ footer {
     border-radius: 12px;
     width: 80%;
     max-width: 400px;
-    color: white;
+    color: rgb(0, 0, 0);
     text-align: center;
     transform: translateY(-100px);
     opacity: 0;
@@ -255,6 +278,7 @@ footer {
         transform: translateY(-100px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -317,4 +341,192 @@ footer {
 }
 
 
+/* Help Icon Styles */
+.help-icon {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    margin-left: 10px;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
 
+.help-icon:hover {
+    color: #3a4bd4;
+}
+
+/* Help Popup Styles */
+#helpModal {
+    position: absolute;
+    display: none;
+    z-index: 9998;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+#helpModal .modal-content {
+    position: relative;
+    background-color: #fff;
+    top: 20%;
+    left: 33.4%;
+    margin: 0;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+#closeHelpModal {
+    color: #000000;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#closeHelpModal:hover,
+#closeHelpModal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Landscape mode for screens with width up to 1200px */
+@media screen and (min-width: 600px) and (max-width: 1200px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+        overflow-y: scroll;
+    }
+
+    .control-container {
+        background-color: #f4f4f9;
+        z-index: 1000;
+        padding: 5px 0;
+    }
+
+    .control-container input[type="text"] {
+        width: 220px;
+        font-size: 12px;
+    }
+
+    .control-container button {
+        font-size: 12px;
+        margin: 3px;
+    }
+
+    .table-container {
+        overflow-x: scroll;
+        width: 100%;
+        max-height: calc(100vh - 60px);
+        margin-bottom: 5px;
+    }
+
+    table {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .highlighted-list {
+        margin-top: 10px;
+    }
+
+    footer {
+        margin-top: 10px;
+    }
+
+    #helpModal {
+        margin: 0 auto;
+    }
+
+    #helpModal .modal-content {
+        width: 90%;
+        padding: 15px;
+        top: 7%;
+        left: 14.4%;
+        margin: 0;
+    }
+
+    #closeHelpModal {
+        font-size: 24px;
+    }
+}
+
+/* Landscape mode for screens with width up to 600px */
+@media screen and (max-width: 600px) and (orientation: landscape) {
+    body {
+        padding: 5px;
+        overflow-y: auto;
+    }
+
+    .control-container {
+        background-color: #f4f4f9;
+        z-index: 1000;
+        padding: 4px 0;
+    }
+
+    .control-container input[type="text"] {
+        width: 180px;
+        font-size: 10px;
+    }
+
+    .control-container button {
+        font-size: 10px;
+        margin: 2px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        width: 100%;
+        max-height: calc(100vh - 50px);
+        margin-bottom: 3px;
+    }
+
+    table {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .highlighted-list {
+        margin-top: 5px;
+    }
+
+    footer {
+        margin-top: 5px;
+    }
+
+    #helpModal {
+        margin: 0 auto;
+    }
+
+    #helpModal .modal-content {
+        width: 90%;
+        padding: 15px;
+        top: 7%;
+        left: 14.4%;
+        margin: 0;
+    }
+
+    #closeHelpModal {
+        font-size: 24px;
+    }
+}
