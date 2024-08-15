@@ -553,7 +553,7 @@ footer {
   }
   
   .svgContainer {
-    min-width: 100%;
+    min-width: 140%;
     height: 100%;
     display: flex;
     align-items: center;
