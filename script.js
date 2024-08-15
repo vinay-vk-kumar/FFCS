@@ -56,6 +56,13 @@ function highlightSlots() {
   }
 }
 
+document.getElementById("searchBox").onkeydown = function (event) {
+    console.log(event.key)
+    if (event.key === "Enter") {
+      highlightSlots();
+    }
+  };
+
 function fixHighlights() {
   const searchValue = document.getElementById("searchBox").value.toUpperCase().trim();
   const slots = searchValue.split("+");
@@ -257,3 +264,7 @@ window.onclick = event => {
     document.getElementById("errorMessage").style.display = "none";
   }
 };
+
+document.getElementById('redirectButton').addEventListener('click', function() {
+    window.open('https://github.com/vinay-vk-kumar/FFCS', '_blank');
+  });

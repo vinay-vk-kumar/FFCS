@@ -530,3 +530,44 @@ footer {
         font-size: 24px;
     }
 }
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .Btn {
+    background-color: #1a73e8;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .Btn:hover {
+    background-color: #155abc;
+  }
+
+  .svgContainer {
+    margin-right: 10px;
+  }
+
+  .BG {
+    background-color: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    transition: all 0.3s;
+  }
+
+  .Btn:hover .BG {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
