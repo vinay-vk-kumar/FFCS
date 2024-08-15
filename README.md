@@ -43,7 +43,7 @@ This web application helps VIT students to easily create, manage, and visualize 
 
 ## Credits
 
-- **Developers:** Vinay Kumar (23BAI10125)
+- **Developers:** Vinay Kumar (23BAI10125) And Piyush Upadhyay (23BAI1O1O3).
 - **More Updates:** Ongoing updates will improve the application based on user feedback.
 
 ## Deployment Instructions
