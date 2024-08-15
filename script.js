@@ -12,50 +12,44 @@ function highlightSlots() {
   const invalidSlots = [];
   const errorMessage = document.getElementById("slotErrorMessage");
 
-  // Clear previous highlights, but keep fixed highlights
+  // Clear previous highlights, keep fixed highlights
   document.querySelectorAll(".selectable").forEach(cell => {
     if (!cell.classList.contains("fixed")) {
-      cell.classList.remove("highlighted");
-      cell.classList.remove("searched");
+      cell.classList.remove("highlighted", "searched");
       cell.style.backgroundColor = ""; // Reset background color
     }
   });
 
-  // Check if all slots are valid
+  // Validate slots
   slots.forEach(slot => {
-    let slotFoundInTable = false;
     const cells = document.querySelectorAll(".selectable");
+    let slotFoundInTable = Array.from(cells).some(cell => cell.textContent.trim().toUpperCase() === slot);
 
-    cells.forEach(cell => {
-      if (cell.textContent.trim().toUpperCase() === slot) {
-        slotFoundInTable = true;
-        validSlots.push(slot);
-      }
-    });
-
-    if (!slotFoundInTable) {
+    if (slotFoundInTable) {
+      validSlots.push(slot);
+    } else {
       invalidSlots.push(slot);
     }
   });
 
-  // If there are invalid slots, show an error message
+  // Show error message for invalid slots
   if (invalidSlots.length > 0) {
-    errorMessage.textContent = `Slot(s) ${invalidSlots.join(", ")} not found in the table. Please enter correct slot(s).`;
+    errorMessage.textContent = `Slot(s) ${invalidSlots.join(", ")} not found in the table.`;
     errorMessage.style.display = "block";
-    errorMessage.style.color = "red"; // Ensure the error message is red
-    return; // Exit function to prevent highlighting
+    return; // Exit function
   }
 
-  // If all slots are valid, highlight them
+  // Highlight valid slots
   validSlots.forEach(slot => {
     document.querySelectorAll(".selectable").forEach(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
         cell.classList.add("searched");
-        cell.style.backgroundColor = searchHighlightColor; // Set pink color for searched cells
+        cell.style.backgroundColor = searchHighlightColor;
       }
     });
   });
 
+  // Hide error message if valid slots are found
   if (validSlots.length > 0) {
     errorMessage.textContent = "";
     errorMessage.style.display = "none";
@@ -75,62 +69,57 @@ function fixHighlights() {
   const alreadySelectedSlots = [];
   const notFoundSlots = [];
 
-  // Check all slots for errors first
+  // Validate slots
   slots.forEach(slot => {
-    let slotFoundInTable = false;
     const cells = document.querySelectorAll(".selectable");
-
-    cells.forEach(cell => {
+    let slotFoundInTable = Array.from(cells).some(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
-        slotFoundInTable = true;
-
         if (cell.classList.contains("fixed")) {
-          alreadySelectedSlots.push(slot); // Add to already fixed slots
+          alreadySelectedSlots.push(slot);
         }
+        return true;
       }
+      return false;
     });
 
     if (!slotFoundInTable) {
-      notFoundSlots.push(slot); // Add to not found slots
+      notFoundSlots.push(slot);
     }
   });
 
-  // If any errors are found, show the error message and exit without fixing or highlighting any slots
+  // Show error messages for selected and not found slots
   if (alreadySelectedSlots.length > 0 || notFoundSlots.length > 0) {
     let errorMessages = [];
 
     if (alreadySelectedSlots.length > 0) {
       errorMessages.push(`Slot(s) ${alreadySelectedSlots.join(", ")} already fixed.`);
     }
-    if (notFoundSlots.length > 0) {
+    else if (notFoundSlots.length > 0) {
       errorMessages.push(`Slot(s) ${notFoundSlots.join(", ")} not found in the table.`);
     }
 
     errorMessage.textContent = errorMessages.join(" ");
     errorMessage.style.display = "block";
-    return; // Exit function to prevent highlighting or fixing any slots
+    return; // Exit function
   }
 
-  // If no errors, highlight and fix the slots
+  // Highlight and fix slots
   slots.forEach(slot => {
-    const cells = document.querySelectorAll(".selectable");
-
-    cells.forEach(cell => {
+    document.querySelectorAll(".selectable").forEach(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
-        cell.classList.add("fixed");
-        cell.classList.add("highlighted");
+        cell.classList.add("fixed", "highlighted");
         cell.style.backgroundColor = highlightColor;
         highlightedCells.push(cell);
       }
     });
   });
 
-  // Open the modal to ask for the subject name only if there are no errors
+  // Open modal to enter subject name
   if (highlightedCells.length > 0) {
     openModal(highlightedCells, slots.join("+"));
   }
 
-  // Clear the search box after fixing the highlights
+  // Clear search box
   document.getElementById("searchBox").value = "";
 }
 
@@ -158,14 +147,13 @@ function openModal(cells, key) {
       li.textContent = `${key} (${subjectName})`;
 
       const removeBtn = document.createElement("button");
-      removeBtn.innerHTML = "✖";
+      removeBtn.textContent = "✖";
       removeBtn.className = "remove-btn-fixed";
       removeBtn.addEventListener("click", () => {
         li.remove();
         fixedHighlights.delete(key);
         cells.forEach(cell => {
-          cell.classList.remove("fixed");
-          cell.classList.remove("highlighted");
+          cell.classList.remove("fixed", "highlighted");
           cell.style.backgroundColor = "";
           cell.textContent = cell.textContent.replace(` (${subjectName})`, "");
         });
@@ -177,14 +165,14 @@ function openModal(cells, key) {
     } else {
       errorMessage.textContent = "Please enter your subject name.";
       errorMessage.style.display = "block";
-      return;
+      return; // Prevent closing modal
     }
 
     modal.style.display = "none";
     modalInput.value = "";
   };
 
-  // Close the modal if the user clicks outside of it or on the "X" button
+  // Close modal on clicking outside or "X" button
   window.onclick = event => {
     if (event.target === modal) {
       cells.forEach(cell => {
@@ -196,9 +184,14 @@ function openModal(cells, key) {
       errorMessage.textContent = "";
       errorMessage.style.display = "none";
     }
+
+    // Add check for help modal
+    const helpModal = document.getElementById("helpModal");
+    if (event.target === helpModal) {
+      helpModal.style.display = "none";
+    }
   };
 
-  // Close the modal when clicking the "X" button
   document.getElementById("closeModal").onclick = () => {
     cells.forEach(cell => {
       cell.classList.remove("highlighted");
@@ -210,7 +203,7 @@ function openModal(cells, key) {
     errorMessage.style.display = "none";
   };
 
-  // Allow pressing Enter key to submit
+  // Submit on Enter key
   modalInput.onkeydown = event => {
     if (event.key === "Enter") {
       submitButton.click();
@@ -219,11 +212,16 @@ function openModal(cells, key) {
 }
 
 function resetTable() {
+  // Clear error message
+  const errorMessageElement = document.getElementById("slotErrorMessage");
+  errorMessageElement.textContent = "";
+  errorMessage.style.display = "none";
+
+  // Reset table cells
   document.querySelectorAll(".selectable").forEach(cell => {
-    cell.style.backgroundColor = ""; // Reset background color
-    cell.classList.remove("highlighted");
-    cell.classList.remove("fixed");
-    cell.textContent = cell.textContent.replace(/\s*\(.*?\)/, ""); // Remove the subject name from text content
+    cell.style.backgroundColor = "";
+    cell.classList.remove("highlighted", "fixed");
+    cell.textContent = cell.textContent.replace(/\s*\(.*?\)/, ""); // Remove subject name
   });
 
   // Clear undo and redo stacks
@@ -231,12 +229,11 @@ function resetTable() {
   redoStack.length = 0;
 
   // Clear fixed highlights list
-  document.getElementById("fixedHighlightsList").innerHTML = "";
+  document.getElementById("fixedHighlightsList").textContent = "";
 }
 
 function openHelpPopup() {
-  const helpModal = document.getElementById("helpModal");
-  helpModal.style.display = "block";
+  document.getElementById("helpModal").style.display = "block";
 }
 
 // Close help modal when clicking the "X" button or outside of the modal
@@ -244,27 +241,17 @@ document.getElementById("closeHelpModal").onclick = () => {
   document.getElementById("helpModal").style.display = "none";
 };
 
+// Ensure both modals close when clicking outside of them
 window.onclick = event => {
   const helpModal = document.getElementById("helpModal");
+  const subjectModal = document.getElementById("subjectModal");
+
   if (event.target === helpModal) {
     helpModal.style.display = "none";
   }
-};
 
-// Close subject modal when clicking the "X" button or outside of the modal
-document.getElementById("closeModal").onclick = () => {
-  const modal = document.getElementById("subjectModal");
-  modal.style.display = "none";
-  document.getElementById("subjectName").value = "";
-  document.getElementById("errorMessage").textContent = "";
-  document.getElementById("errorMessage").style.display = "none";
-};
-
-// Ensure the modal closes when clicking outside of it
-window.onclick = event => {
-  const modal = document.getElementById("subjectModal");
-  if (event.target === modal) {
-    modal.style.display = "none";
+  if (event.target === subjectModal) {
+    subjectModal.style.display = "none";
     document.getElementById("subjectName").value = "";
     document.getElementById("errorMessage").textContent = "";
     document.getElementById("errorMessage").style.display = "none";

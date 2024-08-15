@@ -126,7 +126,7 @@ td:hover {
 
 /* Control container styles */
 .control-container {
-    margin: 20px;
+    margin: 10px;
     text-align: center;
 }
 
@@ -357,9 +357,8 @@ footer {
 
 /* Help Popup Styles */
 #helpModal {
+    position: absolute;
     display: none;
-    /* Hidden by default */
-    position: fixed;
     z-index: 9998;
     left: 0;
     top: 0;
@@ -372,8 +371,11 @@ footer {
 }
 
 #helpModal .modal-content {
+    position: relative;
     background-color: #fff;
-    margin: 5% auto;
+    top: 20%;
+    left: 33.4%;
+    margin: 0;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
@@ -397,7 +399,6 @@ footer {
     cursor: pointer;
 }
 
-
 /* Landscape mode for screens with width up to 1200px */
 @media screen and (min-width: 600px) and (max-width: 1200px) and (orientation: landscape) {
     body {
@@ -406,20 +407,17 @@ footer {
     }
 
     .control-container {
-        margin-bottom: 10px;
         background-color: #f4f4f9;
         z-index: 1000;
         padding: 5px 0;
     }
 
     .control-container input[type="text"] {
-        padding: 8px;
         width: 220px;
         font-size: 12px;
     }
 
     .control-container button {
-        padding: 7px 10px;
         font-size: 12px;
         margin: 3px;
     }
@@ -449,6 +447,22 @@ footer {
     footer {
         margin-top: 10px;
     }
+
+    #helpModal {
+        margin: 0 auto;
+    }
+
+    #helpModal .modal-content {
+        width: 90%;
+        padding: 15px;
+        top: 7%;
+        left: 14.4%;
+        margin: 0;
+    }
+
+    #closeHelpModal {
+        font-size: 24px;
+    }
 }
 
 /* Landscape mode for screens with width up to 600px */
@@ -459,20 +473,17 @@ footer {
     }
 
     .control-container {
-        margin-bottom: 5px;
         background-color: #f4f4f9;
         z-index: 1000;
         padding: 4px 0;
     }
 
     .control-container input[type="text"] {
-        padding: 6px;
         width: 180px;
         font-size: 10px;
     }
 
     .control-container button {
-        padding: 5px 8px;
         font-size: 10px;
         margin: 2px;
     }
@@ -501,5 +512,21 @@ footer {
 
     footer {
         margin-top: 5px;
+    }
+
+    #helpModal {
+        margin: 0 auto;
+    }
+
+    #helpModal .modal-content {
+        width: 90%;
+        padding: 15px;
+        top: 7%;
+        left: 14.4%;
+        margin: 0;
+    }
+
+    #closeHelpModal {
+        font-size: 24px;
     }
 }
