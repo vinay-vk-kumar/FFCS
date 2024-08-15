@@ -457,7 +457,7 @@ footer {
 }
 
 #closeHelpModal {
-    color: #000000;
+    color: #ff0000;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -466,7 +466,7 @@ footer {
 
 #closeHelpModal:hover,
 #closeHelpModal:focus {
-    color: black;
+    color: rgb(0, 0, 0);
     text-decoration: none;
     cursor: pointer;
 }
