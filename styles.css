@@ -33,9 +33,20 @@ body {
 }
 
 @keyframes popupAnimation {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.9); }
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
 }
 
 .popup-content {
@@ -50,9 +61,20 @@ body {
 }
 
 @keyframes popupTextAnimation {
-    0% { opacity: 1; transform: translateY(0); }
-    50% { opacity: 1; transform: translateY(-10px); }
-    100% { opacity: 0; transform: translateY(20px); }
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 }
 
 /* Table Styles */
@@ -72,7 +94,8 @@ table:hover {
     transform: scale(1.02);
 }
 
-th, td {
+th,
+td {
     border: 1px solid #e0e0e0;
     padding: 12px;
     text-align: center;
@@ -255,6 +278,7 @@ footer {
         transform: translateY(-100px);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -317,4 +341,108 @@ footer {
 }
 
 
+/* Landscape mode for screens with width up to 1200px */
+@media screen and (min-width: 600px) and (max-width: 1200px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+        overflow-y: scroll;
+    }
 
+    .control-container {
+        margin-bottom: 10px;
+        background-color: #f4f4f9;
+        z-index: 1000;
+        padding: 5px 0;
+    }
+
+    .control-container input[type="text"] {
+        padding: 8px;
+        width: 220px;
+        font-size: 12px;
+    }
+
+    .control-container button {
+        padding: 7px 10px;
+        font-size: 12px;
+        margin: 3px;
+    }
+
+    .table-container {
+        overflow-x: scroll;
+        width: 100%;
+        max-height: calc(100vh - 60px);
+        margin-bottom: 5px;
+    }
+
+    table {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .highlighted-list {
+        margin-top: 10px;
+    }
+
+    footer {
+        margin-top: 10px;
+    }
+}
+
+/* Landscape mode for screens with width up to 600px */
+@media screen and (max-width: 600px) and (orientation: landscape) {
+    body {
+        padding: 5px;
+        overflow-y: auto;
+    }
+
+    .control-container {
+        margin-bottom: 5px;
+        background-color: #f4f4f9;
+        z-index: 1000;
+        padding: 4px 0;
+    }
+
+    .control-container input[type="text"] {
+        padding: 6px;
+        width: 180px;
+        font-size: 10px;
+    }
+
+    .control-container button {
+        padding: 5px 8px;
+        font-size: 10px;
+        margin: 2px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        width: 100%;
+        max-height: calc(100vh - 50px);
+        margin-bottom: 3px;
+    }
+
+    table {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .highlighted-list {
+        margin-top: 5px;
+    }
+
+    footer {
+        margin-top: 5px;
+    }
+}
