@@ -1,83 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vit FFCS Time Table</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<div class="control-container">
-    <input type="text" id="searchBox" placeholder="Enter Slots like A11+B11+C11">
-    <button onclick="highlightSlots()">Search</button>
-    <button onclick="fixHighlights()">Fix</button>
-    <button onclick="resetTable()">Reset</button>
-    <p id="slotErrorMessage" style="color: red; display: none;"></p>    
-</div>
-
-<!-- Full-screen popup -->
-<div class="popup">
-    <div class="popup-content">
-        Welcome to the FFCS Time Table<br>
-        Organize your slots efficiently!
+    <div class="control-container">
+        <input type="text" id="searchBox" placeholder="Enter Slots like A11+B11+C11">
+        <button onclick="highlightSlots()">Search</button>
+        <button onclick="fixHighlights()">Fix</button>
+        <button onclick="resetTable()">Reset</button>
+        <div class="help-icon" onclick="openHelpPopup()">❓</div>
+        <p id="slotErrorMessage" style="color: red; display: none;"></p>
     </div>
-</div>
 
-<div class="table-container">
-    <table>
-        <tr>
-            <th></th><th>Slot 1<br><span style="font-weight: normal;">08:30 - 10:00</span></th><th>Slot 2<br><span style="font-weight: normal;">10:05 - 11:35</span></th><th>Slot 3<br><span style="font-weight: normal;">11:40 - 13:10</span></th><th>Lunch</th><th>Slot 4<br><span style="font-weight: normal;">13:15 - 14:45</span></th><th>Slot 5<br><span style="font-weight: normal;">14:50 - 16:20</span></th><th>Slot 6<br><span style="font-weight: normal;">16:25 - 17:55</span></th><th>Slot 7<br><span style="font-weight: normal;">18:00 - 19:30</span></th>
-        </tr>
-        <tr>
-            <th>Monday</th>
-            <td class="selectable">A11</td><td class="selectable">B11</td><td class="selectable">C11</td><td class="lunch">Lunch</td><td class="selectable">A21</td><td class="selectable">A14</td><td class="selectable">B21</td><td class="selectable">C21</td>
-        </tr>
-        <tr>
-            <th>Tuesday</th>
-            <td class="selectable">D11</td><td class="selectable">E11</td><td class="selectable">F11</td><td class="lunch">Lunch</td><td class="selectable">D21</td><td class="selectable">E14</td><td class="selectable">E21</td><td class="selectable">F21</td>
-        </tr>
-        <tr>
-            <th>Wednesday</th>
-            <td class="selectable">A12</td><td class="selectable">B12</td><td class="selectable">C12</td><td class="lunch">Lunch</td><td class="selectable">A22</td><td class="selectable">B14</td><td class="selectable">B22</td><td class="selectable">A24</td>
-        </tr>
-        <tr>
-            <th>Thursday</th>
-            <td class="selectable">D12</td><td class="selectable">E12</td><td class="selectable">F12</td><td class="lunch">Lunch</td><td class="selectable">D22</td><td class="selectable">F14</td><td class="selectable">E22</td><td class="selectable">F22</td>
-        </tr>
-        <tr>
-            <th>Friday</th>
-            <td class="selectable">A13</td><td class="selectable">B13</td><td class="selectable">C13</td><td class="lunch">Lunch</td><td class="selectable">A23</td><td class="selectable">C14</td><td class="selectable">B23</td><td class="selectable">B24</td>
-        </tr>
-        <tr>
-            <th>Saturday</th>
-            <td class="selectable">D13</td><td class="selectable">E13</td><td class="selectable">F13</td><td class="lunch">Lunch</td><td class="selectable">D23</td><td class="selectable">D14</td><td class="selectable">D24</td><td class="selectable">E23</td>
-        </tr>
-    </table>
-</div>
-
-<h2>Selected Slots</h2>
-<ul id="fixedHighlightsList" class="highlighted-list"></ul>
-
-<footer>
-    Made by Vinay Kumar (23BAI10125) & Atharva Pagar (23BAI10478)
-</footer>
-<footer>
-    More Updates Will Be Provided (CURRENTLY OPERATIONAL ON PC!!)
-</footer>
-
-<script src="script.js"></script>
-<!-- Subject Name Modal -->
-<div id="subjectModal" class="modal">
-    <div class="modal-content">
-        <span id="closeModal" class="close">&times;</span>
-        <h2>Enter Subject Name</h2>
-        <!-- Error message placeholder -->
-        <p id="errorMessage" style="color: red; display: none;"></p>
-        <input type="text" id="subjectName" placeholder="Enter Subject Name">
-        <button id="submitSubject">Submit</button>
+    <!-- Full-screen popup -->
+    <div class="popup">
+        <div class="popup-content">
+            Welcome to the FFCS Time Table<br>
+            Organize your slots efficiently!
+        </div>
     </div>
-</div>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th></th>
+                <th>Slot 1<br><span style="font-weight: normal;">08:30 - 10:00</span></th>
+                <th>Slot 2<br><span style="font-weight: normal;">10:05 - 11:35</span></th>
+                <th>Slot 3<br><span style="font-weight: normal;">11:40 - 13:10</span></th>
+                <th>Lunch</th>
+                <th>Slot 4<br><span style="font-weight: normal;">13:15 - 14:45</span></th>
+                <th>Slot 5<br><span style="font-weight: normal;">14:50 - 16:20</span></th>
+                <th>Slot 6<br><span style="font-weight: normal;">16:25 - 17:55</span></th>
+                <th>Slot 7<br><span style="font-weight: normal;">18:00 - 19:30</span></th>
+            </tr>
+            <tr>
+                <th>Monday</th>
+                <td class="selectable">A11</td>
+                <td class="selectable">B11</td>
+                <td class="selectable">C11</td>
+                <td class="lunch">Lunch</td>
+                <td class="selectable">A21</td>
+                <td class="selectable">A14</td>
+                <td class="selectable">B21</td>
+                <td class="selectable">C21</td>
+            </tr>
+            <tr>
+                <th>Tuesday</th>
+                <td class="selectable">D11</td>
+                <td class="selectable">E11</td>
+                <td class="selectable">F11</td>
+                <td class="lunch">Lunch</td>
+                <td class="selectable">D21</td>
+                <td class="selectable">E14</td>
+                <td class="selectable">E21</td>
+                <td class="selectable">F21</td>
+            </tr>
+            <tr>
+                <th>Wednesday</th>
+                <td class="selectable">A12</td>
+                <td class="selectable">B12</td>
+                <td class="selectable">C12</td>
+                <td class="lunch">Lunch</td>
+                <td class="selectable">A22</td>
+                <td class="selectable">B14</td>
+                <td class="selectable">B22</td>
+                <td class="selectable">A24</td>
+            </tr>
+            <tr>
+                <th>Thursday</th>
+                <td class="selectable">D12</td>
+                <td class="selectable">E12</td>
+                <td class="selectable">F12</td>
+                <td class="lunch">Lunch</td>
+                <td class="selectable">D22</td>
+                <td class="selectable">F14</td>
+                <td class="selectable">E22</td>
+                <td class="selectable">F22</td>
+            </tr>
+            <tr>
+                <th>Friday</th>
+                <td class="selectable">A13</td>
+                <td class="selectable">B13</td>
+                <td class="selectable">C13</td>
+                <td class="lunch">Lunch</td>
+                <td class="selectable">A23</td>
+                <td class="selectable">C14</td>
+                <td class="selectable">B23</td>
+                <td class="selectable">B24</td>
+            </tr>
+            <tr>
+                <th>Saturday</th>
+                <td class="selectable">D13</td>
+                <td class="selectable">E13</td>
+                <td class="selectable">F13</td>
+                <td class="lunch">Lunch</td>
+                <td class="selectable">D23</td>
+                <td class="selectable">D14</td>
+                <td class="selectable">D24</td>
+                <td class="selectable">E23</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>Selected Slots</h2>
+    <ul id="fixedHighlightsList" class="highlighted-list"></ul>
+
+    <footer>
+        Made by Vinay Kumar (23BAI10125) & Atharva Pagar (23BAI10478)
+    </footer>
+    <footer>
+        More Updates Will Be Provided (CURRENTLY OPERATIONAL ON PC!!)
+    </footer>
+    <!-- Subject Name Modal -->
+    <div id="subjectModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2>Enter Subject Name</h2>
+            <!-- Error message placeholder -->
+            <p id="errorMessage" style="color: red; display: none;"></p>
+            <input type="text" id="subjectName" placeholder="Enter Subject Name">
+            <button id="submitSubject">Submit</button>
+        </div>
+    </div>
+
+    <!-- Help Popup -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span id="closeHelpModal" class="close">&times;</span>
+            <h2>How to Use the Timetable</h2>
+            <p>To create your timetable:</p>
+            <ul>
+                <li>Enter the slot codes (e.g., A11+B11) separated by "+" in the search box.</li>
+                <li>Click "Search" to highlight those slots on the timetable.</li>
+                <li>Click "Fix" to save your selected slots.</li>
+                <li>If you want to clear the timetable, click "Reset".</li>
+                <li>You can hover over any slot to get a quick view.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>

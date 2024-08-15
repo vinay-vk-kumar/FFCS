@@ -2,24 +2,18 @@ const undoStack = [];
 const redoStack = [];
 const fixedHighlights = new Map();
 
-
-  // Check if all slots are valid
 const highlightColor = "#ffff00"; // Yellow color for fixed cells
 const searchHighlightColor = "#ffb6c1"; // Pink color for searched cells
 
 function highlightSlots() {
-  const searchValue = document
-    .getElementById("searchBox")
-    .value.toUpperCase()
-    .trim();
+  const searchValue = document.getElementById("searchBox").value.toUpperCase().trim();
   const slots = searchValue.split("+");
-  let foundAnySlot = false;
   const validSlots = [];
   const invalidSlots = [];
   const errorMessage = document.getElementById("slotErrorMessage");
 
   // Clear previous highlights, but keep fixed highlights
-  document.querySelectorAll(".selectable").forEach((cell) => {
+  document.querySelectorAll(".selectable").forEach(cell => {
     if (!cell.classList.contains("fixed")) {
       cell.classList.remove("highlighted");
       cell.classList.remove("searched");
@@ -28,11 +22,11 @@ function highlightSlots() {
   });
 
   // Check if all slots are valid
-  slots.forEach((slot) => {
+  slots.forEach(slot => {
     let slotFoundInTable = false;
     const cells = document.querySelectorAll(".selectable");
 
-    cells.forEach((cell) => {
+    cells.forEach(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
         slotFoundInTable = true;
         validSlots.push(slot);
@@ -53,29 +47,23 @@ function highlightSlots() {
   }
 
   // If all slots are valid, highlight them
-  validSlots.forEach((slot) => {
-    document.querySelectorAll(".selectable").forEach((cell) => {
+  validSlots.forEach(slot => {
+    document.querySelectorAll(".selectable").forEach(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
-        foundAnySlot = true;
         cell.classList.add("searched");
         cell.style.backgroundColor = searchHighlightColor; // Set pink color for searched cells
       }
     });
   });
 
-  if (foundAnySlot) {
-    // Clear any existing error message if at least one slot was found
+  if (validSlots.length > 0) {
     errorMessage.textContent = "";
     errorMessage.style.display = "none";
   }
 }
-  
 
 function fixHighlights() {
-  const searchValue = document
-    .getElementById("searchBox")
-    .value.toUpperCase()
-    .trim();
+  const searchValue = document.getElementById("searchBox").value.toUpperCase().trim();
   const slots = searchValue.split("+");
   const highlightedCells = [];
   const errorMessage = document.getElementById("slotErrorMessage");
@@ -88,11 +76,11 @@ function fixHighlights() {
   const notFoundSlots = [];
 
   // Check all slots for errors first
-  slots.forEach((slot) => {
+  slots.forEach(slot => {
     let slotFoundInTable = false;
     const cells = document.querySelectorAll(".selectable");
 
-    cells.forEach((cell) => {
+    cells.forEach(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
         slotFoundInTable = true;
 
@@ -118,17 +106,16 @@ function fixHighlights() {
       errorMessages.push(`Slot(s) ${notFoundSlots.join(", ")} not found in the table.`);
     }
 
-    // Show the appropriate error message
     errorMessage.textContent = errorMessages.join(" ");
     errorMessage.style.display = "block";
     return; // Exit function to prevent highlighting or fixing any slots
   }
 
   // If no errors, highlight and fix the slots
-  slots.forEach((slot) => {
+  slots.forEach(slot => {
     const cells = document.querySelectorAll(".selectable");
 
-    cells.forEach((cell) => {
+    cells.forEach(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
         cell.classList.add("fixed");
         cell.classList.add("highlighted");
@@ -147,89 +134,84 @@ function fixHighlights() {
   document.getElementById("searchBox").value = "";
 }
 
-
 function openModal(cells, key) {
   const modal = document.getElementById("subjectModal");
   const modalInput = document.getElementById("subjectName");
   const errorMessage = document.getElementById("errorMessage");
-  modal.style.display = "block";
 
-  // Set focus to input field and center the input
+  modal.style.display = "block";
   modalInput.focus();
 
   const submitButton = document.getElementById("submitSubject");
-  submitButton.onclick = function () {
+  submitButton.onclick = () => {
     const subjectName = modalInput.value.trim().toUpperCase().substring(0, 3);
-    if (subjectName) {
-      // Clear any existing error message
-      errorMessage.textContent = "";
-      errorMessage.style.display = "none"; // Hide the error message
 
-      cells.forEach((cell) => {
+    if (subjectName) {
+      errorMessage.textContent = "";
+      errorMessage.style.display = "none";
+
+      cells.forEach(cell => {
         cell.textContent += ` (${subjectName})`;
       });
 
       const li = document.createElement("li");
       li.textContent = `${key} (${subjectName})`;
+
       const removeBtn = document.createElement("button");
       removeBtn.innerHTML = "✖";
       removeBtn.className = "remove-btn-fixed";
-      removeBtn.addEventListener("click", function () {
+      removeBtn.addEventListener("click", () => {
         li.remove();
         fixedHighlights.delete(key);
-        cells.forEach((cell) => {
+        cells.forEach(cell => {
           cell.classList.remove("fixed");
-          cell.classList.remove("highlighted"); // Unhighlight the cell
-          cell.style.backgroundColor = ""; // Reset background color
-          // Remove the subject name from the text content
+          cell.classList.remove("highlighted");
+          cell.style.backgroundColor = "";
           cell.textContent = cell.textContent.replace(` (${subjectName})`, "");
         });
       });
+
       li.appendChild(removeBtn);
       document.getElementById("fixedHighlightsList").appendChild(li);
       fixedHighlights.set(key, cells);
     } else {
-      // Show an error message if the subject name is not entered
       errorMessage.textContent = "Please enter your subject name.";
-      errorMessage.style.display = "block"; // Show the error message
-      return; // Exit the function to prevent closing the modal
+      errorMessage.style.display = "block";
+      return;
     }
 
-    // Close modal and clear input field
     modal.style.display = "none";
     modalInput.value = "";
   };
 
   // Close the modal if the user clicks outside of it or on the "X" button
-  window.onclick = function (event) {
+  window.onclick = event => {
     if (event.target === modal) {
-      // Revert the highlighted cells back to normal
-      cells.forEach((cell) => {
+      cells.forEach(cell => {
         cell.classList.remove("highlighted");
-        cell.style.backgroundColor = ""; // Reset background color
+        cell.style.backgroundColor = "";
       });
       modal.style.display = "none";
       modalInput.value = "";
-      errorMessage.textContent = ""; // Clear any existing error message
-      errorMessage.style.display = "none"; // Hide the error message
+      errorMessage.textContent = "";
+      errorMessage.style.display = "none";
     }
   };
 
   // Close the modal when clicking the "X" button
-  document.getElementById("closeModal").onclick = function () {
-    // Revert the highlighted cells back to normal
-    cells.forEach((cell) => {
+  document.getElementById("closeModal").onclick = () => {
+    cells.forEach(cell => {
       cell.classList.remove("highlighted");
-      cell.style.backgroundColor = ""; // Reset background color
+      cell.style.backgroundColor = "";
     });
     modal.style.display = "none";
     modalInput.value = "";
-    errorMessage.textContent = ""; // Clear any existing error message
-    errorMessage.style.display = "none"; // Hide the error message
+    errorMessage.textContent = "";
+    errorMessage.style.display = "none";
   };
 
   // Allow pressing Enter key to submit
-  modalInput.onkeydown = function (event) {
+  modalInput.onkeydown = event => {
     if (event.key === "Enter") {
       submitButton.click();
     }
@@ -237,55 +219,54 @@ function openModal(cells, key) {
 }
 
 function resetTable() {
-  // Reset all cells
-  document.querySelectorAll(".selectable").forEach((cell) => {
+  document.querySelectorAll(".selectable").forEach(cell => {
     cell.style.backgroundColor = ""; // Reset background color
     cell.classList.remove("highlighted");
     cell.classList.remove("fixed");
-    // Remove the subject name from text content (handles names of any length)
-    cell.textContent = cell.textContent.replace(/\s*\(.*?\)/, "");
+    cell.textContent = cell.textContent.replace(/\s*\(.*?\)/, ""); // Remove the subject name from text content
   });
 
   // Clear undo and redo stacks
   undoStack.length = 0;
   redoStack.length = 0;
 
-  // Clear fixed highlights and fixed highlights list
-  fixedHighlights.clear();
+  // Clear fixed highlights list
   document.getElementById("fixedHighlightsList").innerHTML = "";
-
-  // Clear the error message
-  const errorMessage = document.getElementById("slotErrorMessage");
-  errorMessage.textContent = "";
-  errorMessage.style.display = "none";
-
-  // Clear the search box
-  document.getElementById("searchBox").value = "";
 }
 
-// Modal close function for the "X" button
-document.getElementById("closeModal").onclick = function () {
-  document.getElementById("subjectModal").style.display = "none";
-  document.getElementById("subjectName").value = "";
+function openHelpPopup() {
+  const helpModal = document.getElementById("helpModal");
+  helpModal.style.display = "block";
+}
+
+// Close help modal when clicking the "X" button or outside of the modal
+document.getElementById("closeHelpModal").onclick = () => {
+  document.getElementById("helpModal").style.display = "none";
 };
 
-// Add functionality for Enter key to trigger search
-document.getElementById("searchBox").onkeydown = function (event) {
-  if (event.key === "Enter") {
-    highlightSlots();
+window.onclick = event => {
+  const helpModal = document.getElementById("helpModal");
+  if (event.target === helpModal) {
+    helpModal.style.display = "none";
   }
 };
 
-document.addEventListener("DOMContentLoaded", function() {
-  const popup = document.querySelector('.popup');
-  
-  // Set a timeout to remove the popup from the DOM after the animation
-  setTimeout(function() {
-      popup.remove(); // Remove the popup element from the DOM
-  }, 4000); // Duration should match the animation duration
-});
+// Close subject modal when clicking the "X" button or outside of the modal
+document.getElementById("closeModal").onclick = () => {
+  const modal = document.getElementById("subjectModal");
+  modal.style.display = "none";
+  document.getElementById("subjectName").value = "";
+  document.getElementById("errorMessage").textContent = "";
+  document.getElementById("errorMessage").style.display = "none";
+};
 
-
-
-
-
+// Ensure the modal closes when clicking outside of it
+window.onclick = event => {
+  const modal = document.getElementById("subjectModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+    document.getElementById("subjectName").value = "";
+    document.getElementById("errorMessage").textContent = "";
+    document.getElementById("errorMessage").style.display = "none";
+  }
+};
