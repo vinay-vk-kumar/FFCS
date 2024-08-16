@@ -471,6 +471,20 @@ footer {
     cursor: pointer;
 }
 
+/* Centered GIF styling */
+.gif-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .centered-gif {
+    max-width: 50%;
+    max-height: 50%;
+    object-fit: contain;
+  }
+
 /* Landscape mode for screens with width up to 1200px */
 @media screen and (min-width: 600px) and (max-width: 1200px) and (orientation: landscape) {
     body {
