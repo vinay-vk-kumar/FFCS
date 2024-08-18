@@ -743,3 +743,8 @@ div#buttonDiv{
     justify-content: center;
     margin: 10px;
 }
+
+/* ? button hover*/
+div#help:hover{
+    transform: scale(1.1);
+}
