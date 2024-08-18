@@ -271,7 +271,7 @@ document.getElementById('redirectButton').addEventListener('click', function() {
 });
 
 document.getElementById('insta').addEventListener('click', function() {
-  window.open('https://www.instagram.com/vinay_vk_kumar?igsh=ZGhxbDN3YXJub254', '_blank');
+  window.open('https://www.instagram.com/vinay_vk_kumar/', '_blank');
 });
 
 document.getElementById("toggleButton").onclick = function () {
