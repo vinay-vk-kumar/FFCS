@@ -114,7 +114,7 @@ function fixHighlights() {
   slots.forEach(slot => {
     document.querySelectorAll(".selectable").forEach(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
-        cell.classList.add("fixed", "highlighted");
+        cell.classList.add("highlighted");
         cell.style.backgroundColor = highlightColor;
         highlightedCells.push(cell);
       }
@@ -148,6 +148,7 @@ function openModal(cells, key) {
 
       cells.forEach(cell => {
         cell.textContent += ` (${subjectName})`;
+        cell.classList.add("fixed");  // Fix the cell only after subject name is entered
       });
 
       const li = document.createElement("li");
@@ -172,7 +173,7 @@ function openModal(cells, key) {
     } else {
       errorMessage.textContent = "Please enter your subject name.";
       errorMessage.style.display = "block";
-      return; // Prevent closing modal
+      return; // Prevent closing modal and fixing the slots
     }
 
     modal.style.display = "none";
@@ -266,5 +267,18 @@ window.onclick = event => {
 };
 
 document.getElementById('redirectButton').addEventListener('click', function() {
-    window.open('https://github.com/vinay-vk-kumar/FFCS', '_blank');
-  });
+  window.open('https://github.com/vinay-vk-kumar/FFCS', '_blank');
+});
+
+document.getElementById("toggleButton").onclick = function () {
+    var panel = document.getElementById("colorPanel");
+    var toggleButton = document.getElementById("toggleButton");
+
+    if (panel.style.display === "none" || panel.style.display === "") {
+        panel.style.display = "flex";
+        toggleButton.textContent = "Turn OFF";
+    } else {
+        panel.style.display = "none";
+        toggleButton.textContent = "Turn ON";
+    }
+};
