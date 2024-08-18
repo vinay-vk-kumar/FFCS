@@ -270,6 +270,10 @@ document.getElementById('redirectButton').addEventListener('click', function() {
   window.open('https://github.com/vinay-vk-kumar/FFCS', '_blank');
 });
 
+document.getElementById('insta').addEventListener('click', function() {
+  window.open('https://www.instagram.com/vinay_vk_kumar?igsh=ZGhxbDN3YXJub254', '_blank');
+});
+
 document.getElementById("toggleButton").onclick = function () {
     var panel = document.getElementById("colorPanel");
     var toggleButton = document.getElementById("toggleButton");
