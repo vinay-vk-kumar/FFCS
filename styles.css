@@ -748,3 +748,119 @@ div#buttonDiv{
 div#help:hover{
     transform: scale(1.1);
 }
+
+#paletteAppend{
+    transition: ease-in 2s ;
+}
+
+/* Styles for color options container */
+.color-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #eee;
+    border: 2px solid #ddd;
+    transition: fadeIn 10s ;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.color-options:hover {
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+}
+
+
+/* Styles for each color option */
+.color-option {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid #333;
+}
+
+/* Style for selected color option */
+.color-option:hover{
+    border-radius: 35% ;
+}    
+
+/* The switch - the box around the slider */
+.switch {
+    font-size: 17px;
+    position: relative;
+    display: inline-block;
+    width: 3.5em;
+    height: 2em;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #3a4bd4;
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.4em;
+    left: 0.3em;
+    bottom: 0.3em;
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: 0 0px 20px rgba(0,0,0,0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .switch input:checked + .slider {
+    background: #3a4bd4;
+  }
+  
+  .switch input:focus + .slider {
+    box-shadow: 0 0 1px #3a4bd4;
+
+  }
+  
+  .switch input:checked + .slider:before {
+    transform: translateX(1.6em);
+    width: 2em;
+    height: 2em;
+    bottom: 0;
+  }
+
+  #palette-status{
+    font-family: Arial;
+    font-style:inherit;
+    border: skyblue;
+    background-size: 10px 10px 100px;
+    background: #737fda;
+    color: #fff;
+    border-radius: 3px;
+    margin: 7px;
+    font-size: 18px;
+    font-weight: 700;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  }
+
+#contentContainer {
+    transition: margin-top 0.5s ease; /* Adjust timing and easing as needed */
+}
+
+#contentContainer.moved {
+    margin-top: 20px; /* Adjust based on the height of the palette */
+}
