@@ -14,6 +14,9 @@ This web application helps VIT students to easily create, manage, and visualize 
   
 - **Fix Highlights:** 
   - Assign a subject name to highlighted slots to fix them in the timetable.
+
+- **color palette:**
+  - Use Different Colors to highlight them
   
 - **Reset Table:** 
   - Clear all fixed highlights and reset the timetable to its original state.
