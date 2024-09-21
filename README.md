@@ -1,5 +1,7 @@
 # VIT FFCS Timetable Web Application
 
+## Link - https://vit-ffcs.vercel.app/
+
 ## Overview
 
 This web application helps VIT students to easily create, manage, and visualize their timetable using the Fully Flexible Credit System (FFCS). Users can search for specific slots, highlight them, and fix them into a personalized timetable with associated subject names.
