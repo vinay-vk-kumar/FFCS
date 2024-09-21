@@ -1,9 +1,10 @@
 const undoStack = [];
 const redoStack = [];
 const fixedHighlights = new Map();
+const palletedCells = new Map(); // New map to track palleted cells
 
 const highlightColor = "#ffff00"; // Yellow color for fixed cells
-const searchHighlightColor = "#ffb6c1"; // Pink color for searched cells
+const searchHighlightColor = "#fb9aa9"; // Pink color for searched cells
 
 function highlightSlots() {
   const searchValue = document.getElementById("searchBox").value.toUpperCase().trim();
@@ -12,11 +13,15 @@ function highlightSlots() {
   const invalidSlots = [];
   const errorMessage = document.getElementById("slotErrorMessage");
 
-  // Clear previous highlights, keep fixed highlights
+  // Clear only search highlights, but keep fixed and palleted highlights
   document.querySelectorAll(".selectable").forEach(cell => {
     if (!cell.classList.contains("fixed")) {
-      cell.classList.remove("highlighted", "searched");
-      cell.style.backgroundColor = ""; // Reset background color
+      if (palletedCells.has(cell)) {
+        cell.style.backgroundColor = palletedCells.get(cell); // Restore the paletteed color
+      } else {
+        cell.style.backgroundColor = ""; // Reset background color for unpalleted cells
+      }
+      cell.classList.remove("searched");
     }
   });
 
@@ -34,7 +39,7 @@ function highlightSlots() {
 
   // Show error message for invalid slots
   if (invalidSlots.length > 0) {
-    errorMessage.textContent = `Slot(s) ${invalidSlots.join(", ")} not found in the table.`;
+    errorMessage.textContent = `Slot(s) ${invalidSlots.join(", ")} not found in the table. or already Fixed`;
     errorMessage.style.display = "block";
     return; // Exit function
   }
@@ -43,6 +48,7 @@ function highlightSlots() {
   validSlots.forEach(slot => {
     document.querySelectorAll(".selectable").forEach(cell => {
       if (cell.textContent.trim().toUpperCase() === slot) {
+        // If the cell is already palleted, apply the search highlight temporarily
         cell.classList.add("searched");
         cell.style.backgroundColor = searchHighlightColor;
       }
@@ -57,11 +63,10 @@ function highlightSlots() {
 }
 
 document.getElementById("searchBox").onkeydown = function (event) {
-    console.log(event.key)
-    if (event.key === "Enter") {
-      highlightSlots();
-    }
-  };
+  if (event.key === "Enter") {
+    highlightSlots();
+  }
+};
 
 function fixHighlights() {
   const searchValue = document.getElementById("searchBox").value.toUpperCase().trim();
@@ -99,9 +104,9 @@ function fixHighlights() {
     let errorMessages = [];
 
     if (alreadySelectedSlots.length > 0) {
-      errorMessages.push(`Slot(s) ${alreadySelectedSlots.join(", ")} already fixed.`);
+      errorMessages.push(`Slot(s) ${alreadySelectedSlots.join(", ")} are already fixed.`);
     }
-    else if (notFoundSlots.length > 0) {
+    if (notFoundSlots.length > 0) {
       errorMessages.push(`Slot(s) ${notFoundSlots.join(", ")} not found in the table.`);
     }
 
@@ -185,25 +190,24 @@ function openModal(cells, key) {
     if (event.target === modal) {
       cells.forEach(cell => {
         cell.classList.remove("highlighted");
-        cell.style.backgroundColor = "";
+        // Only clear palette color if the cell is fixed, otherwise retain it
+        if (!cell.classList.contains("fixed")) {
+          cell.style.backgroundColor = "";
+        }
       });
       modal.style.display = "none";
       modalInput.value = "";
       errorMessage.textContent = "";
       errorMessage.style.display = "none";
     }
-
-    // Add check for help modal
-    const helpModal = document.getElementById("helpModal");
-    if (event.target === helpModal) {
-      helpModal.style.display = "none";
-    }
   };
 
   document.getElementById("closeModal").onclick = () => {
     cells.forEach(cell => {
       cell.classList.remove("highlighted");
-      cell.style.backgroundColor = "";
+      if (!cell.classList.contains("fixed")) {
+        cell.style.backgroundColor = ""; // Clear only if not fixed
+      }
     });
     modal.style.display = "none";
     modalInput.value = "";
@@ -219,7 +223,9 @@ function openModal(cells, key) {
   };
 }
 
+
 function resetTable() {
+  document.getElementById("searchBox").value = ""
   // Clear error message
   const errorMessageElement = document.getElementById("slotErrorMessage");
   errorMessageElement.textContent = "";
@@ -274,15 +280,72 @@ document.getElementById('insta').addEventListener('click', function() {
   window.open('https://www.instagram.com/vinay_vk_kumar/', '_blank');
 });
 
-document.getElementById("toggleButton").onclick = function () {
-    var panel = document.getElementById("colorPanel");
-    var toggleButton = document.getElementById("toggleButton");
 
-    if (panel.style.display === "none" || panel.style.display === "") {
-        panel.style.display = "flex";
-        toggleButton.textContent = "Turn OFF";
-    } else {
-        panel.style.display = "none";
-        toggleButton.textContent = "Turn ON";
+let selectedColor = null;  // To store the selected color
+
+function togglePalette() {
+  const contentContainer = document.getElementById("contentContainer");
+  const toggleSwitch = document.getElementById("toggleSwitch");
+  
+  if (toggleSwitch.checked) {
+      document.getElementById("palette-status").innerText = "PALETTE - ON";
+      contentContainer.classList.add("moved");
+      handleSwitchOn();
+  } else {
+      document.getElementById("palette-status").innerText = "PALETTE - OFF";
+      contentContainer.classList.remove("moved");
+      handleSwitchOff();
+  }
+}
+
+
+function handleSwitchOn() {
+  const parentDiv = document.getElementById("paletteAppend");
+  const paletteDiv = document.createElement("div");
+  paletteDiv.innerHTML = `
+    <div class="color-option" style="background-color: rgb(255, 221, 193);"></div>
+    <div class="color-option" style="background-color: rgb(255, 195, 160);"></div>
+    <div class="color-option" style="background-color: rgb(193, 225, 193);"></div>
+    <div class="color-option" style="background-color: rgb(213, 170, 255);"></div>
+    <div class="color-option" style="background-color: rgb(173, 255, 47);"></div>
+    <div class="color-option" style="background-color: rgb(255, 255, 255);"></div>`;
+  paletteDiv.setAttribute("class", "color-options");
+  paletteDiv.setAttribute("id", "color-options");
+
+  parentDiv.appendChild(paletteDiv);
+
+  // Allow the user to select a color and apply it to unhighlighted/unfixed cells
+  paletteDiv.addEventListener("click", function (event) {
+    if (event.target.classList.contains("color-option")) {
+      const selectedColor = event.target.style.backgroundColor;
+
+      document.querySelectorAll(".selectable").forEach(cell => {
+        cell.onclick = () => {
+          if (!cell.classList.contains("fixed") && !cell.classList.contains("searched")) {
+            cell.style.backgroundColor = selectedColor;
+            palletedCells.set(cell, selectedColor); // Track the palleted cells
+          }
+        };
+      });
     }
-};
+  });
+
+  paletteStatus = document.getElementById("palette-status")
+  paletteStatus.innerHTML = '" PALETTE - ON "';
+}
+
+function handleSwitchOff() {
+  const parent = document.getElementById("paletteAppend");
+  parent.innerHTML = "";
+
+  // Remove pallet colors from non-fixed cells when palette is turned off
+  document.querySelectorAll(".selectable").forEach(cell => {
+    if (palletedCells.has(cell) && !cell.classList.contains("fixed")) {
+      cell.style.backgroundColor = "";
+    }
+  });
+
+  palletedCells.clear(); // Clear the palleted cells map
+  paletteStatus = document.getElementById("palette-status")
+  paletteStatus.innerHTML = '" PALETTE - OFF "';
+}
