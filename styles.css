@@ -198,8 +198,12 @@ td:hover {
 
 /* Control container styles */
 .control-container {
-    margin: 10px;
-    text-align: center;
+    /* margin: 10px;
+    text-align: center; */
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 20px;
 }
 
 .control-container input[type="text"] {
@@ -499,6 +503,7 @@ footer {
     }
 
     .control-container input[type="text"] {
+        align-self: flex-end;
         width: 220px;
         font-size: 12px;
     }
@@ -863,4 +868,24 @@ div#help:hover{
 
 #contentContainer.moved {
     margin-top: 20px; /* Adjust based on the height of the palette */
+}
+
+#logo {
+    width: 59px;
+    height: 59px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border: 2px solid rgba(255,255,255,0.2);
+    margin-right: 20px;
+    align-self: flex-end;
+    filter: brightness(1.05) contrast(1.1);
+}
+
+#logo:hover {
+    transform:scale(1.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1) contrast(1.15);
 }
